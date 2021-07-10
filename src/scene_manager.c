@@ -54,5 +54,7 @@ void scene_manager_display(SceneManager *scene_manager) {
 }
 
 void scene_manager_destroy(SceneManager *scene_manager) {
+#ifdef _NUSYS_
 	free(scene_manager);
+#endif
 }

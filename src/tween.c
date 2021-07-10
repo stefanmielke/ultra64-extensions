@@ -29,10 +29,12 @@ Tween *tween_init(MemZone *memory_pool) {
 }
 
 void tween_destroy(Tween *tween) {
+#ifdef _NUSYS_
 	if (!tween->allocator) {
 		free(tween->tween_values);
 		free(tween);
 	}
+#endif
 }
 
 void tween_tick(Tween *tween) {
