@@ -1,7 +1,5 @@
 #pragma once
 
-#include <nusys.h>
-
 /**
  * @brief A contiguous zone where memory can be allocated.
  */

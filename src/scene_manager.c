@@ -1,8 +1,5 @@
 #include "../include/scene_manager.h"
 
-#include <nusys.h>
-#include <nustd/malloc.h>
-
 #include "../include/memory_alloc.h"
 
 SceneManager *scene_manager_init(MemZone *global_memory_pool, MemZone *scene_memory_pool,

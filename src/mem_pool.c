@@ -1,6 +1,5 @@
 #include "../include/mem_pool.h"
 
-#include <nustd/malloc.h>
 #include <nustd/string.h>
 
 void mem_zone_init(MemZone *z, char *mem_pool, int size) {

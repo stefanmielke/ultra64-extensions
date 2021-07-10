@@ -7,6 +7,15 @@ This library is a port of [Libdragon-Extensions](https://github.com/stefanmielke
 
 You can either [download the code from GitHub](https://github.com/stefanmielke/ultra64-extensions/archive/refs/heads/main.zip) into your project, or [clone the repo](https://github.com/stefanmielke/ultra64-extensions.git) inside your project as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) (so you can use `git pull` to get the latest changes when needed).
 
+If you are using NuSystem, you have to add this definition to your `LCDEFS` variable:
+```
+-D_NUSYS_
+```
+or add this line:
+```
+LCDEFS += -D_NUSYS_
+```
+
 ## Extensions Available
 
 ### Position
@@ -137,7 +146,7 @@ void change_screen(short curr_screen, short next_screen) {
 	}
 }
 
-// 3 ways to initialize scene manager
+// 3 ways to initialize scene manager (options 2 and 3 are currently only available if using NuSystem)
 
 // 1. I have a global and scene memory pools
 SceneManager *scene_manager = scene_manager_init(&global_memory_pool, &memory_pool, &change_screen);
@@ -193,7 +202,7 @@ Tween *tween;
 
 // initialize the tween with a memory pool
 tween = tween_init(&memory_pool);
-// initialize without a memory pool
+// initialize without a memory pool (only available when using NuSystem, uses malloc)
 tween = tween_init(NULL);
 
 // starting the tween, examples

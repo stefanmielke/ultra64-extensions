@@ -60,7 +60,7 @@ typedef struct {
  * scene_memory_pool.
  *
  * @param[in] global_memory_pool
- *            The global memory pool. If NULL will use malloc.
+ *            The global memory pool. If NULL will use malloc (only if using NuSystem).
  * @param[in] scene_memory_pool
  *            Memory pool used by the objects in a scene.
  *            Will get freed every scene change if not NULL.
