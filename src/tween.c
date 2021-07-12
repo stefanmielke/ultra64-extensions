@@ -7,13 +7,13 @@
 
 #define get_ticks_ms() (OS_CYCLES_TO_NSEC(osGetTime()) / 1000000)
 
-void tween_float_tick(Tween *tween, float tick_diff);
+void tween_float_tick(Tween *tween, float tick_diff, bool should_end);
 void tween_float_swap(Tween *tween);
 
 void tween_size_tick(Tween *tween, float tick_diff);
 void tween_size_swap(Tween *tween);
 
-void tween_position_tick(Tween *tween, float tick_diff);
+void tween_position_tick(Tween *tween, float tick_diff, bool should_end);
 void tween_position_swap(Tween *tween);
 
 // void tween_color_tick(Tween *tween, float tick_diff);
@@ -50,15 +50,16 @@ void tween_tick(Tween *tween) {
 
 	tick_diff = tween->easing_function(tick_diff);
 
+	bool should_end = tween->current_time >= tween->duration_in_ms;
 	switch (tween->type) {
 		case TWEEN_FLOAT:
-			tween_float_tick(tween, tick_diff);
+			tween_float_tick(tween, tick_diff, should_end);
 			break;
 		case TWEEN_SIZE:
 			tween_size_tick(tween, tick_diff);
 			break;
 		case TWEEN_POSITION:
-			tween_position_tick(tween, tick_diff);
+			tween_position_tick(tween, tick_diff, should_end);
 			break;
 		// case TWEEN_COLOR:
 		// 	tween_color_tick(tween, tick_diff);
@@ -67,7 +68,7 @@ void tween_tick(Tween *tween) {
 			break;
 	}
 
-	if (tween->current_time >= tween->duration_in_ms) {
+	if (should_end) {
 		if ((!tween->always_repeat && !tween->auto_reverse) ||
 			(tween->auto_reverse && tween->is_reversing && !tween->always_repeat)) {
 			if (tween->ending_callback)
@@ -169,8 +170,13 @@ void tween_set_to_float(Tween *tween, float start_value, float end_value,
 	tween->tween_values = values;
 }
 
-void tween_float_tick(Tween *tween, float tick_diff) {
+void tween_float_tick(Tween *tween, float tick_diff, bool should_end) {
 	TweenValuesFloat *values = tween->tween_values;
+	if (should_end) {
+		values->tween_callback(tween->target_object, values->end_value);
+		return;
+	}
+
 	float next_value = (tick_diff * values->value_diff) + values->start_value;
 	values->tween_callback(tween->target_object, next_value);
 }
@@ -246,8 +252,13 @@ void tween_set_to_position(Tween *tween, Position start_value, Position end_valu
 	tween->tween_values = values;
 }
 
-void tween_position_tick(Tween *tween, float tick_diff) {
+void tween_position_tick(Tween *tween, float tick_diff, bool should_end) {
 	TweenValuesPosition *values = tween->tween_values;
+	if (should_end) {
+		values->tween_callback(tween->target_object, values->end_value);
+		return;
+	}
+
 	float next_value_x = (tick_diff * values->value_diff.x) + values->start_value.x;
 	float next_value_y = (tick_diff * values->value_diff.y) + values->start_value.y;
 	Position new_position = {next_value_x, next_value_y};
