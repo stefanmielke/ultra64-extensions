@@ -84,12 +84,14 @@ Struct that contains a range and has functions to get random values from it.
 
 ```c
 // generates a range from 0 to 10
-RangeFloat r1 = new_range_float(0, 10);
-// generates a range from 10 to 10
-RangeFloat r2 = new_range_float_same(10);
+RangeFloat r1 = { 0, 10 };
+RangeInt r2 = { 0, 10 };
 
 // gets a random value from 0 to 10
 float value = range_get_from_float(&r1);
+
+// gets a random value from 0 to 10
+int value = range_get_from_int(&r2);
 ```
 
 ### Memory Pool
