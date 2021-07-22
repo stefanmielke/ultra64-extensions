@@ -23,7 +23,7 @@ Tween *tween_init(MemZone *memory_pool) {
 	Tween *tween = MEM_ALLOC(sizeof(Tween), memory_pool);
 	tween->allocator = memory_pool;
 	tween->type = TWEEN_NONE;
-	tween->finished = false;
+	tween->finished = true;
 
 	return tween;
 }
