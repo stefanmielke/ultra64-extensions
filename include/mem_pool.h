@@ -3,7 +3,7 @@
 /**
  * @brief A contiguous zone where memory can be allocated.
  */
-typedef struct {
+typedef struct MemZone {
 	/// Pointer to current free space position.
 	char *pos;
 	/// Pointer to start of zone.
